@@ -68,6 +68,7 @@ export default class VADNoiseDetection extends EventEmitter {
         this._active = false;
 
         this._calculateNoisyScore = this._calculateNoisyScore.bind(this);
+        console.log("SHAON:: Constructor called...");
     }
 
     /**
@@ -77,6 +78,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @fires VAD_NOISY_DEVICE
      */
     _calculateNoisyScore() {
+        console.log("SHAON:: Calculating noisy score...");
         const scoreAvg = calculateAverage(this._scoreArray);
         const audioLevelAvg = calculateAverage(this._audioLvlArray);
 
@@ -97,6 +99,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @param {number} avgAudioLvl - average audio level of the PCM sample associated with the VAD score.s
      */
     _recordValues(vadScore, avgAudioLvl) {
+        console.log("SHAON:: _recordValues(vadScore, avgAudioLvl) callled.");
         this._scoreArray.push(vadScore);
         this._audioLvlArray.push(avgAudioLvl);
     }
@@ -108,6 +111,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @fires DETECTOR_STATE_CHANGE
      */
     _setActiveState(active) {
+        console.log("SHAON:: _setActiveState(active) called.");
         this._active = active;
         this.emit(DETECTOR_STATE_CHANGE, this._active);
     }
@@ -119,6 +123,7 @@ export default class VADNoiseDetection extends EventEmitter {
      */
     changeMuteState(isMuted) {
         // This service only needs to run when the microphone is not muted.
+        console.log("SHAON:: changeMuteState(isMuted) called.");
         this._setActiveState(!isMuted);
         this.reset();
     }
@@ -129,6 +134,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @returns {boolean}
      */
     isActive() {
+        console.log("SHAON:: isActive() called.");
         return this._active;
     }
 
@@ -138,6 +144,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @returns {void}
      */
     reset() {
+        console.log("SHAON:: reset() called.");
         this._processing = false;
         this._scoreArray = [];
         this._audioLvlArray = [];
@@ -155,6 +162,7 @@ export default class VADNoiseDetection extends EventEmitter {
      * @listens VAD_SCORE_PUBLISHED
      */
     processVADScore(vadScore) {
+        console.log("SHAON:: processVADScore(vadScore) called.");
         if (!this._active) {
             return;
         }
